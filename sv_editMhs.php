@@ -1,17 +1,18 @@
 <?php
-//memanggil file pustaka fungsi
-require "fungsi.php";
+include 'fungsi.php'; // Make sure this file contains the database connection code
 
-//memindahkan data kiriman dari form ke var biasa
-$id=$_POST["id"];
-$nama=$_POST["nama"];
-$email=$_POST["email"];
-$uploadOk=1;
+// memindahkan data kiriman dari form ke var biasa
+$id = $_POST["id"];
+$nama = $_POST["nama"];
+$email = $_POST["email"];
 
-//membuat query
-$sql="update mhs set nama='$nama',
-					 email='$email'
-					 where id='$id'";
-mysqli_query($koneksi,$sql) or die(mysqli_error($koneksi));
-header("location:updateMhs.php");
+// Update the record in the database
+$sql = "UPDATE mhs SET nama='$nama', email='$email' WHERE id=$id";
+
+if (mysqli_query($koneksi, $sql)) {
+    // echo "Data berhasil diperbarui";
+    echo $id . $nama . $email;
+} else {
+    echo "Error: " . mysqli_error($koneksi);
+}
 ?>

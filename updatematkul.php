@@ -26,7 +26,7 @@
 <body>
 <?php require "head.html"; // Ensure sidebar is included ?>
 <div class="utama">
-    <h2 class="text-center">Daftar Mahasiswa</h2>
+    <h2 class="text-center">Daftar Matkul</h2>
     <div class="text-center"><a href="prnMhsPdf.php"><span class="fas fa-print">&nbsp;Print</span></a></div>
     <span class="float-left">
         <a class="btn btn-success" href="addMhs.php">Tambah Data</a>
@@ -44,7 +44,7 @@
 $(document).ready(function(){
     function fetchData(page = 1, searchKeyword = ''){
         $.ajax({
-            url: 'fetch_data.php',
+            url: 'fetch_data_matkul.php',
             method: 'POST',
             data: {hal: page, cari: searchKeyword},
             dataType: 'json',
@@ -65,10 +65,10 @@ $(document).ready(function(){
                     <thead class='thead-light'>
                         <tr>
                             <th>No.</th>
-                            <th>NIM</th>
+                            <th>Kode Matkul</th>
                             <th>Nama</th>
-                            <th>Email</th>
-                            <th>Foto</th>
+                            <th>SKS</th>
+                            <th>Jenis Matkul</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -76,13 +76,13 @@ $(document).ready(function(){
                         ${response.data.length > 0 ? response.data.map((row, index) => `
                             <tr>
                                 <td>${index + 1 + (response.halAktif - 1) * 3}</td>
-                                <td>${row.nim}</td>
-                                <td>${row.nama}</td>
-                                <td>${row.email}</td>
-                                <td><img src='foto/${row.foto}' height='50px'></td>
+                                <td>${row.idmatkul}</td>
+                                <td>${row.namamatkul}</td>
+                                <td>${row.sks}</td>
+                                <td>${row.jns}</td>
                                 <td>
                                     <button id='${row.nim}' class='btn btn-outline-primary btn-sm edit-button'>Edit</button>
-                                    <button id='${row.id}' class='btn btn-outline-danger btn-sm delete-button' data-foto='${row.foto}'>Hapus</button>
+                                    <button id='${row.idmatkul}' class='btn btn-outline-danger btn-sm delete-button' data-foto='${row.foto}'>Hapus</button>
                                 </td>
                             </tr>
                         `).join('') : `<tr><th colspan='6'><div class='alert alert-info alert-dismissible fade show text-center'>Data tidak ada</div></th></tr>`}
@@ -112,15 +112,15 @@ $(document).ready(function(){
     let deleteId, deleteFoto;
 
     $(document).on('click', '.delete-button', function() {
-        deleteId = $(this).attr('id');
+        deleteId = $(this).attr('idmatkul');
         deleteFoto = $(this).data('foto');
         $('#confirmDeleteModal').modal('show');
 
         $('#confirmDeleteBtn').click(function() {
             $.ajax({
-                url: 'hpsMhs.php',
+                url: 'hpsmatkul.php',
                 method: 'POST',
-                data: {id: deleteId, foto: deleteFoto},
+                data: {kode: deleteId},
                 success: function() {
                     fetchData();
                     $('#confirmDeleteModal').modal('hide');
@@ -132,36 +132,34 @@ $(document).ready(function(){
 
     $(document).on('click', '.edit-button', function() {
         $.ajax({
-            url: "detailMahasiswa.php",
+            url: "detailMatkul.php",
             method: "POST",
             data: {
-                nim: this.id
+                kode: this.idmatkul
             },
             success: function(response) {
                 let data = JSON.parse(response);
 
                 $('#modal').html('\
-                    <h2 class="mb-3 text-center">EDIT DATA MAHASISWA</h2>\
+                    <h2 class="mb-3 text-center">EDIT DATA MATA KULIAH</h2>\
                     <div class="row">\
-                        <div class="col-sm-3 text-center">\
-                            <img class="rounded img-thumbnail" src="foto/' + data.foto + '">\
-                            <div>\
-                                [ <a href="gantiFotoMhs.php?id=">Ganti Foto</a> ]\
-                            </div>\
-                        </div>\
                         <div class="col-sm-9">\
                             <form id="edit-form" enctype="multipart/form-data" method="post" action="sv_editMhs.php">\
                                 <div class="form-group">\
-                                    <label for="nim">NIM:</label>\
-                                    <input class="form-control" type="text" name="nim" id="nim" value="' + data.nim + '" readonly>\
+                                    <label for="nim">KODE MATA KULIAH:</label>\
+                                    <input class="form-control" type="text" name="nim" id="nim" value="' + data.idmatkul + '" readonly>\
                                 </div>\
                                 <div class="form-group">\
                                     <label for="nama">Nama:</label>\
-                                    <input class="form-control" type="text" name="nama" id="nama" value="' + data.nama + '">\
+                                    <input class="form-control" type="text" name="nama" id="nama" value="' + data.namamatkul + '">\
                                 </div>\
                                 <div class="form-group">\
-                                    <label for="email">Email:</label>\
-                                    <input class="form-control" type="email" name="email" id="email" value="' + data.email + '">\
+                                    <label for="sks">SKS:</label>\
+                                    <input class="form-control" type="email" name="sks" id="sks" value="' + data.sks + '">\
+                                </div>\
+                                <div class="form-group">\
+                                    <label for="jns">JENIS MATAKULIAH:</label>\
+                                    <input class="form-control" type="text" name="jns" id="jns" value="' + data.jns + '">\
                                 </div>\
                                 <div>\
                                     <button class="btn btn-primary" id="close">Tutup</button>\

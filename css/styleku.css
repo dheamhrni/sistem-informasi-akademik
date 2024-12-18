@@ -58,3 +58,45 @@ body {
   .menusamping {padding-top: 15px;}
   .menusamping a {font-size: 12px;}
 }
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    max-width: 400px;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 10px;
+    text-align: center;
+}
+
+.popup h4 {
+    margin-bottom: 10px; 
+}
+
+.popup button {
+    margin-top: 10px;
+}
+
+#modal {
+    display: none;
+    position: fixed;
+    z-index: 999;
+    left: 50%;
+    top: 50%;
+    transform: translate(-60%, -50%);
+    background-color: grey;
+    width: 70%;
+    height: 70%;
+    padding: 5%;
+    border-radius: 10px;
+}
+
+.pagination .active a {
+    font-weight: bold;
+    color: red;
+    background-color: #e9ecef;
+}

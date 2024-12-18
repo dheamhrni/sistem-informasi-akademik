@@ -16,26 +16,30 @@
 	?>
 	<div class="utama">		
 		<br><br><br>		
-		<h3>TAMBAH DATA MAHASISWA</h3>
+		<h3>TAMBAH DATA MATA KULIAH</h3>
 		<div class="alert alert-success alert-dismissible" id="success" style="display:none;">
 	  		<a href="#" class="close" data-dismiss="alert" aria-label="close">×</a>
 		</div>	
-		<form id="form" method="post" action="sv_addMhs.php" enctype="multipart/form-data">
+		<form id="form" method="post" action="sv_addmatkul.php" enctype="multipart/form-data">
 			<div class="form-group">
-				<label for="nim">NIM:</label>
-				<input class="form-control" type="text" pattern="^[A-Za-z]{1}\d{2}\.\d{4}\.\d{5}$" name="nim" maxlength="14" id="nim" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi NIM')">
+				<label for="kdmatkul">Kode Matakuliah:</label>
+				<input class="form-control" type="text" pattern="^[A-Za-z]{1}\d{2}\.\d{6}$" name="kdmatkul" maxlength="10" id="idmatkul" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi Id Matakuliah')">
 			</div>
 			<div class="form-group">
-				<label for="nama">Nama:</label>
-				<input class="form-control" type="text" name="nama" id="nama" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi Nama')">
+				<label for="namamatkul">Nama Matakuliah:</label>
+				<input class="form-control" type="text" name="namamatkul" id="namamatkul" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi Nama Matakuliah')">
 			</div>
 			<div class="form-group">
-				<label for="email">Email:</label>
-				<input class="form-control" type="email" name="email" id="email" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi E-Mail')">
+				<label for="sks">SKS:</label>
+				<input class="form-control" type="text" name="sks" id="sks" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi SKS')">
 			</div>
 			<div class="form-group">
-				<label for="foto">Foto</label> 
-				<input class="form-control" type="file" name="foto" id="foto" required>
+				<label for="jenis">Jenis</label> 
+				<input class="form-control" type="text" name="jenis" id="jenis" required>
+			</div>
+            <div class="form-group">
+				<label for="semester">Semester:</label>
+				<input class="form-control" type="text" name="semester" id="semester" required oninput="setCustomValidity('')" oninvalid="this.setCustomValidity('Harap isi Semester')">
 			</div>
 			<div>		
 				<button type="submit" class="btn btn-primary" value="Simpan">Simpan</button>
@@ -45,8 +49,8 @@
 
     <div class="popup" id="successPopup">
         <h4>Berhasil!</h4> 
-        <p>Data mahasiswa telah ditambahkan.</p>
-        <button class="btn btn-success" id="closePopup">OK</button>
+        <p>Data matakuliah telah ditambahkan.</p>
+        <button class="btn btn-success" id="closePopup" onclick="window.location.href = 'updateMatkul.php'">OK</button>
     </div>
 
     <script>
